@@ -26,7 +26,7 @@ const objects = [{
     }]
   }]
 }]
-```
 
 const scenePopulate = new ScenePopulate()
 scenePopulate.populate(objects)
+```
