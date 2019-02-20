@@ -2,8 +2,10 @@
 An object based scene populator for Decentraland
 
 ## How to use example
-import ScenePopulate from "scene-populate"
+
 ```
+import ScenePopulate from "scene-populate"
+
 const objects = [{
   name: 'object name',
   path:'path to gltf',
