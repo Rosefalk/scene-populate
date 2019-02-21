@@ -1,9 +1,38 @@
+interface objData {
+    name: string,
+    path: string,
+    transforms?: object,
+    children?: objData[],
+    events?: {
+        type: Function,
+        func: Function
+      }[],
+    animations?: {
+        autoplay: boolean,
+        animation: string,
+        options?: object
+    }[]
+}[]
+
+interface settings {
+    debug?: boolean
+}
+
 class ScenePopulate {
-    constructor() {
-        log('populate scene instanced')
+    private _settings: settings = {
+        debug: false
     }
 
-    private createEntity(objData: any) {
+    constructor() {
+    }
+
+    private _logEvent(event: string) {
+        if(this._settings.debug) {
+            log(event)
+        }
+    }
+
+    private _createEntity(objData: objData) {
         let obj = new Entity()
 
         // Add Name
@@ -19,19 +48,19 @@ class ScenePopulate {
             objData.animations.forEach((animation: any) => {
                 const clip = new AnimationClip(animation.animation)
                 if(animation.options) {
-                    clip.setParams(animation.options)
+                clip.setParams(animation.options)
                 }
                 obj.get(GLTFShape).addClip(clip)
 
                 if(animation.autoplay) {
-                    clip.play()
+                clip.play()
                 }
             })
         }
         // Add Events (optional)
         if(objData.events) {
             objData.events.forEach((eventList: any) => {
-                log('    - binding event', eventList.type.name)
+                this._logEvent(`    - binding event ${eventList.type.name}`)
                 obj.set(new eventList.type((e: Event) => eventList.func(obj, e)))
             })
         }
@@ -40,10 +69,10 @@ class ScenePopulate {
     }
 
     // Recursive addition of elements
-    private addMeshEntity(objArray: Array<Object>, parent: Entity) {
-        objArray.forEach((objData: any) => {
-            let obj = this.createEntity(objData)
-            log(parent ? `  • ${obj.name}` : `• ${obj.name}`)
+    private _addMeshEntity(objArray: object[], parent: Entity) {
+        objArray.forEach((objData: objData) => {
+            let obj = this._createEntity(objData)
+            this._logEvent(parent ? `  • ${obj.name}` : `• ${obj.name}`)
 
             engine.addEntity(obj)
 
@@ -51,13 +80,21 @@ class ScenePopulate {
                 obj.setParent(parent)
             }
             if(objData.children) {
-                this.addMeshEntity(objData.children, obj)
+                this._addMeshEntity(objData.children, obj)
             }
         })
     }
 
-    public populate(objArray: Array<Object>) {
-        this.addMeshEntity(objArray, undefined)
+    public populate(objArray: objData[]) {
+        this._addMeshEntity(objArray, undefined)
+    }
+
+    public set setSettings(settings: settings) {
+        this._settings = {...this._settings, ...settings}
+    }
+
+    public get getSettings() {
+        return this._settings
     }
 }
 
