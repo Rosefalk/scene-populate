@@ -32,3 +32,5 @@ const objects = [{
 const scenePopulate = new ScenePopulate()
 scenePopulate.populate(objects)
 ```
+
+Use scenePopulate.settings = { debug: true } for a bit of logging output,
