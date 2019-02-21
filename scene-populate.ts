@@ -12,28 +12,28 @@ class ScenePopulate {
         obj.add(new GLTFShape(objData.path))
         // Add Transforms (optional)
         if(objData.transforms) {
-        obj.set(new Transform(objData.transforms))
+            obj.set(new Transform(objData.transforms))
         }
         // Add Animations (optional)
         if(objData.animations && objData.animations.length) {
-        objData.animations.forEach((animation: any) => {
-            const clip = new AnimationClip(animation.animation)
-            if(animation.options) {
-            clip.setParams(animation.options)
-            }
-            obj.get(GLTFShape).addClip(clip)
+            objData.animations.forEach((animation: any) => {
+                const clip = new AnimationClip(animation.animation)
+                if(animation.options) {
+                    clip.setParams(animation.options)
+                }
+                obj.get(GLTFShape).addClip(clip)
 
-            if(animation.autoplay) {
-            clip.play()
-            }
-        })
+                if(animation.autoplay) {
+                    clip.play()
+                }
+            })
         }
         // Add Events (optional)
         if(objData.events) {
-        objData.events.forEach((eventList: any) => {
-            log('    - binding event', eventList.type.name)
-            obj.set(new eventList.type((e: Event) => eventList.func(obj, e)))
-        })
+            objData.events.forEach((eventList: any) => {
+                log('    - binding event', eventList.type.name)
+                obj.set(new eventList.type((e: Event) => eventList.func(obj, e)))
+            })
         }
 
         return obj
@@ -42,17 +42,17 @@ class ScenePopulate {
     // Recursive addition of elements
     private addMeshEntity(objArray: Array<Object>, parent: Entity) {
         objArray.forEach((objData: any) => {
-        let obj = this.createEntity(objData)
-        log(parent ? `  • ${obj.name}` : `• ${obj.name}`)
+            let obj = this.createEntity(objData)
+            log(parent ? `  • ${obj.name}` : `• ${obj.name}`)
 
-        engine.addEntity(obj)
+            engine.addEntity(obj)
 
-        if(parent) {
-            obj.setParent(parent)
-        }
-        if(objData.children) {
-            this.addMeshEntity(objData.children, obj)
-        }
+            if(parent) {
+                obj.setParent(parent)
+            }
+            if(objData.children) {
+                this.addMeshEntity(objData.children, obj)
+            }
         })
     }
 
