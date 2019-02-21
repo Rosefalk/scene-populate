@@ -1,5 +1,7 @@
 # scene-populate
-An object based scene populator for Decentraland
+An object based scene populator for Decentraland.
+
+It takes an object and turns it into objects in the scene.
 
 ## How to use example
 
