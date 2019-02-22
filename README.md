@@ -27,14 +27,14 @@ import ScenePopulate from "scene-populate" // Import ScenePopulate Constructor
 const objects = [{
   name: 'object name',
   path:'path to gltf',
-  transforms: {
+  transforms: { // transforms can be any of the SDK transforms
     position: new Vector3(5, 0, 9)
   },
   children: [{
     name: 'object name',
     path:'path to gltf',
     events: [{
-      type: OnClick, // Function
+      type: OnClick, // Function, must be an event
       func: someFunction // Function
     }],
     animations: [{
