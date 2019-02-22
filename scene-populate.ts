@@ -3,6 +3,7 @@ interface objData {
     name: string,
     path: string,
     transforms?: object,
+    ignoreChildren?: boolean,
     children?: objData[],
     events?: {
         type: Function,
@@ -20,7 +21,7 @@ interface settings {
     ignoreChildren?: boolean
 }
 
-class ScenePopulate {
+export class ScenePopulate {
     private _settings: settings = {
         debug: false,
         ignoreChildren: false
@@ -82,7 +83,7 @@ class ScenePopulate {
             if(parent) {
                 obj.setParent(parent)
             }
-            if(!this._settings.ignoreChildren && objData.children) {
+            if((!this._settings.ignoreChildren && !objData.ignoreChildren) && objData.children) {
                 this._addMeshEntity(objData.children, obj)
             }
         })
@@ -100,5 +101,3 @@ class ScenePopulate {
         return this._settings
     }
 }
-
-export default ScenePopulate
