@@ -1,10 +1,13 @@
 # scene-populate
-An object based scene populator for Decentraland.
 
-It takes an object and turns it into objects in the scene.
+## What is ScenePopulate?
+ScenePopulate is an object based recursive GLTF loader for Decentraland. In short you define what the scene should look like and ScenePopulate makes it happen for you automagically.
+
+It could be considered to be a way to define a scene like in the XML version of the CLI, but in the Dynamic CLI instead. This way you get the best of both worlds; An easy way to populate a scene while maintaining a dynamic scene.
 
 ## How to use example
 
+The following array covers most of the features this library:
 ```
 import ScenePopulate from "scene-populate"
 
@@ -34,5 +37,14 @@ const objects = [{
 const scenePopulate = new ScenePopulate()
 scenePopulate.populate(objects)
 ```
+Only name and path are requires, rest is optional.
 
-Use scenePopulate.settings = { debug: true } for a bit of logging output,
+Before calling populate you could define settings, for example use scenePopulate.settings = { debug: true } for a bit of logging output.
+
+```
+scenePopulate.setSettings = { debug: true }
+```
+
+Adding ignoreChildren to the object will ignore that object's children. Adding it to settings will ignore all children.
+
+
