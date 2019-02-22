@@ -7,9 +7,22 @@ It could be considered to be a way to define a scene like in the XML version of 
 
 ## How to use example
 
-The following array covers most of the features this library:
+Minimal viable example; This will load one object in the scene's corner.
 ```
 import ScenePopulate from "scene-populate"
+
+const objects = [{
+  name: 'object name',
+  path:'path to gltf'
+}]
+
+const scenePopulate = new ScenePopulate() // Create a new instance of ScenePopulate
+scenePopulate.populate(objects) // Populate!
+```
+
+The following array covers most of the features this library:
+```
+import ScenePopulate from "scene-populate" // Import ScenePopulate Constructor
 
 const objects = [{
   name: 'object name',
@@ -21,30 +34,25 @@ const objects = [{
     name: 'object name',
     path:'path to gltf',
     events: [{
-      type: OnClick,
-      func: someFunction
+      type: OnClick, // Function
+      func: someFunction // Function
     }],
     animations: [{
       animation: 'animation name',
       options: {
         weight: 0.5
       },
-      autoplay: true
+      autoplay: true // Autoplays the animation on load
     }]
   }]
 }]
 
-const scenePopulate = new ScenePopulate()
-scenePopulate.populate(objects)
+const scenePopulate = new ScenePopulate() // Create a new instance of ScenePopulate
+scenePopulate.setSettings = { debug: true } // Logging output
+scenePopulate.populate(objects) // Populate!
 ```
 Only name and path are requires, rest is optional.
 
-Before calling populate you could define settings, for example use scenePopulate.settings = { debug: true } for a bit of logging output.
-
-```
-scenePopulate.setSettings = { debug: true }
-```
-
-Adding ignoreChildren to the object will ignore that object's children. Adding it to settings will ignore all children.
+PS: Adding ignoreChildren to the object will ignore that object's children. Adding it to settings will ignore all children.
 
 
