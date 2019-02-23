@@ -27,6 +27,8 @@ export class ScenePopulate {
         ignoreChildren: false
     }
 
+    private _generatedEntities: Entity[] = []
+
     constructor() {
     }
 
@@ -73,7 +75,7 @@ export class ScenePopulate {
     }
 
     // Recursive addition of elements
-    private _addMeshEntity(objArray: object[], parent: Entity): void {
+    private _addMeshEntity(objArray: object[], parent?: Entity): void {
         objArray.forEach((objData: objData) => {
             let obj = this._createEntity(objData)
             this._logEvent(parent ? `  • ${obj.name}` : `• ${obj.name}`)
@@ -82,7 +84,11 @@ export class ScenePopulate {
 
             if(parent) {
                 obj.setParent(parent)
+                // generatedParent.children.push(generatedEntityObj)
+            } else {
+                this._generatedEntities.push(obj)
             }
+
             if((!this._settings.ignoreChildren && !objData.ignoreChildren) && objData.children) {
                 this._addMeshEntity(objData.children, obj)
             }
@@ -90,14 +96,18 @@ export class ScenePopulate {
     }
 
     public populate(objArray: objData[]): void {
-        this._addMeshEntity(objArray, undefined)
+        this._addMeshEntity(objArray)
     }
 
-    public set setSettings(settings: settings) {
-        this._settings = {...this._settings, ...settings}
+    public set settings(settings: settings) {
+        this._settings = {...this._settings, ...settings} // extend defaults with new parameters
     }
 
-    public get getSettings(): settings {
+    public get settings(): settings {
         return this._settings
+    }
+
+    public get generatedEntities(): Entity[] {
+        return this._generatedEntities
     }
 }
