@@ -48,7 +48,7 @@ const objects = [{
 }]
 
 const scenePopulate = new ScenePopulate() // Create a new instance of ScenePopulate
-scenePopulate.setSettings = { debug: true } // Logging output
+scenePopulate.settings = { debug: true } // Logging output
 scenePopulate.populate(objects) // Populate!
 ```
 Only name and path are requires, rest is optional.
