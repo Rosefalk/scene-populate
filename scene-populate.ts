@@ -84,7 +84,6 @@ export class ScenePopulate {
 
             if(parent) {
                 obj.setParent(parent)
-                // generatedParent.children.push(generatedEntityObj)
             } else {
                 this._generatedEntities.push(obj)
             }
